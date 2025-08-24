@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name"viewport" content="width=device-width, initial-scale=1.0" media="screen">
+
+        <title>Orbit Interaction Page</title>
+
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <style type="text/tailwindcss">
+            @font-face {
+                font-family: 'Paperlogy-ExtraBold';
+                src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+                font-weight: 800;
+                font-style: normal;
+            }
+
+            @keyframes blink {
+                0% {opacity: 1.0}
+                50% {opacity: 0}
+                100% {opacity: 1.0}
+            }
+
+            @keyframes rotate {
+                from {transform: rotate(0deg)}
+                to {transform: rotate(360deg)}
+            }
+
+            .blinking {
+                animation-name: blink;
+                animation-iteration-count: infinite;
+                animation-timing-function: ease-in-out;
+            }
+
+            .fast-blink { animation-duration: 1s; }
+            .mid-blink { animation-duration: 2.5s; }
+            .slow-blink { animation-duration: 4s; }
+
+            .rotating {animation: rotate 180s infinite linear;}
+
+            .only-border { -webkit-text-stroke: 4px white; }
+        </style>
+    </head>
+    <body class="fixed overflow-hidden w-[100%] min-w-[100%] h-[100%] min-h-[100%]">
+
+        <!-- Template: star -->
+        <template id="star-template">
+            <div id="star-target" class="absolute size-[4px] m-[2px] bg-white rounded-full z-[2] blinking "></div>
+            <div id="star-light" class="absolute size-[8px] bg-white rounded-full blur-xs z-[1] blinking "></div>
+        </template>
+
+        <!-- Template: logo -->
+        <template id="logo-template">
+            <div id="logo-target-box">
+                <img id="logo-target" src="./logo.svg" class="absolute top-[50%] left-[50%] z-[10] translate-[-50%] "/>
+            </div>
+            <div id="logo-light-box">
+                <img id="logo-light" src="./logo.svg" class="absolute top-[50%] left-[50%] z-[9] translate-[-50%] blur-md blinking mid-blink "/>
+            </div>
+        </template>
+
+        <!-- Template: Title -->
+        <template id="title-template">
+            <div id="title-target-box" class="absolute w-[full] h-[100vh]">
+                <span id="title-target" class="absolute translate-[-50%] text-9xl only-border text-transparent font-black font-[Paperlogy-ExtraBold]">ORBIT</span>
+                <span id="title-light" class="absolute translate-[-50%] text-9xl only-border text-transparent font-black font-[Paperlogy-ExtraBold] blur-md">ORBIT</span>
+            </div>
+        </template>
+
+        <!-- Logo: svg -->
+        <div id="bg" class="absolute w-[100vw] h-[100vh] bg-radial from-[#202020] to-[black]"></div>
+        <div id="logo-bg" class="absolute w-full h-[100vh] top-[0%] left-[0%]"></div>
+
+        <!-- Communication Buttons: KakaoTalk & Instagram -->
+        <div id="communication-box" class="absolute w-full h-[100vh] top-[0px] left-[0px]">
+            <svg id="kakao-talk" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.0" stroke="white" class="size-23 absolute top-[87.5%] left-[42.5%] translate-[-50%] cursor-pointer" onclick="location.href='https://open.kakao.com/o/gMlLFPne'">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
+            </svg>
+            <svg id="kakao-talk" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-23 absolute top-[87.5%] left-[42.5%] translate-[-50%] blur-sm">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" />
+            </svg>
+
+            <div id="instagram" class="absolute top-[87.6%] left-[57.5%] size-[23rem] translate-[-50%] cursor-pointer" onclick="location.href='https://www.instagram.com/orbit_crew_/'">
+                <div id="instagram-part-1" class="absolute top-[50%] left-[50%] size-[4.5rem] rounded-2xl border-4 border-white translate-[-50%]"></div>
+                <div id="instagram-part-2" class="absolute top-[50%] left-[50%] rounded-full size-[2.5rem] border-4 border-white translate-[-50%]"></div>
+                <div id="instagram-part-3" class="absolute top-[42.5%] left-[53.5%] rounded-full size-[0.5rem] bg-white"></div>
+            </div>>
+            <div id="instagram-light" class="absolute top-[87.6%] left-[57.5%] size-[23rem] translate-[-50%] blur-sm">
+                <div id="instagram-light-part-1" class="absolute top-[50%] left-[50%] size-[4.5rem] rounded-2xl border-4 border-white translate-[-50%]"></div>
+                <div id="instagram-light-part-2" class="absolute top-[50%] left-[50%] rounded-full size-[2.5rem] border-4 border-white translate-[-50%]"></div>
+                <div id="instagram-light-part-3" class="absolute top-[42.5%] left-[53.5%] rounded-full size-[0.5rem] bg-white"></div>
+            </div>>
+        </div>
+        
+        <!-- Media Query (Max Width: 375px) -->
+        <div id="star-bg" class="absolute w-[100vw] h-[100vh] top-[0px] left-[0px] rotating"></div>
+        <div id="ttl-bg" class="absolute w-[100vw] h-[100vh] top-[0px] left-[0px]"></div>
+    </body>
+    <script>
+        const template = {
+            star: document.getElementById('star-template'),
+            logo: document.getElementById('logo-template'),
+            title: document.getElementById('title-template')
+        }
+
+        function spreadStar(c = 1, min = 0, max = 1) {
+            for (let i = 0; i < c; i++) {
+                const [t, l] = [
+                    template.star.content.cloneNode(true).getElementById('star-target'),
+                    template.star.content.cloneNode(true).getElementById('star-light')
+                ]
+
+                let [rx, ry] = [Math.random() * 120 - 20, Math.random() * 120 - 20]
+                let r = Math.random() * (max - min) + min
+
+                t.style.top = rx + 'vh'
+                t.style.left = ry + 'vh'
+                t.style.animation = `blink ${r}s ease-in-out infinite`
+
+                l.style.top = (rx) + 'vh'
+                l.style.left = (ry) + 'vh'
+                l.style.animation = `blink ${r}s ease-in-out infinite`
+
+                document.getElementById('star-bg').appendChild(t)
+                document.getElementById('star-bg').appendChild(l)
+            }
+        }
+
+        function locateLogo(size = 1) {
+            const [t, l] = [
+                template.logo.content.cloneNode(true).getElementById('logo-target'),
+                template.logo.content.cloneNode(true).getElementById('logo-light')
+            ]
+
+            t.className += `size-[${size}rem] `
+            l.className += `size-[${size}rem] `
+
+            document.getElementById('logo-bg').appendChild(t)
+            document.getElementById('logo-bg').appendChild(l)
+        }
+
+        function locateTitle(locX = 25, locY = 50) {
+            if (locX > 100) locX -= 100
+            if (locY > 100) locY -= 100
+
+            const [t, l] = [
+                template.title.content.cloneNode(true).getElementById('title-target'),
+                template.title.content.cloneNode(true).getElementById('title-light')
+            ]
+
+            t.style.top = locX + '%'
+            t.style.left = locY + '%'
+
+            l.style.top = locX + '%'
+            l.style.left = locY + '%'
+
+            document.getElementById('ttl-bg').appendChild(t)
+            document.getElementById('ttl-bg').appendChild(l)
+        }
+
+        window.addEventListener('load', () => {
+            spreadStar(240, 3, 10)
+            locateLogo(40)
+            locateTitle(22.5)
+        })
+    </script>
+</html>
